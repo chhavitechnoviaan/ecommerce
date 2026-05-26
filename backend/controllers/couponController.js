@@ -1,6 +1,6 @@
 import Coupon from "../models/Coupon.js";
 import Product from "../models/Product.js";
-
+import mongoose from "mongoose";
 export const createCoupon = async (
   req,
   res
@@ -195,7 +195,7 @@ export const applyCoupon = async (
 //   }
 // }
 
-import mongoose from "mongoose";
+
 
 if (
   coupon.applicableType === "SPECIFIC"

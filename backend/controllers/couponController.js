@@ -137,34 +137,128 @@ export const applyCoupon = async (
 
     // PRODUCT CHECK
 
-    if (
-      coupon.applicableType ===
-      "SPECIFIC"
-    ) {
+   // =========================
+// CATEGORY CHECK
+// =========================
 
-      const cartProductIds =
-        products.map(
-          (item) => item.productId
-        );
+// if (
+//   coupon.applicableType ===
+//   "SPECIFIC"
+// ) {
 
-      const matched =
-        coupon.applicableProducts.some(
-          (id) =>
-            cartProductIds.includes(
-              id.toString()
-            )
-        );
+//   // cart product ids
+//   const cartProductIds =
+//     products.map(
+//       (item) => item.productId
+//     );
 
-      if (!matched) {
+//   // fetch cart products
+//   const cartProducts =
+//     await Product.find({
+//       _id: {
+//         $in: cartProductIds,
+//       },
+//     });
 
-        return res.status(400).json({
-          success: false,
-          message:
-            "Coupon not applicable on selected products",
-        });
-      }
-    }
+//   // cart categories
+//   const cartCategories =
+//     cartProducts.map(
+//       (product) => product.category
+//     );
 
+//   console.log(
+//     "Cart Categories:",
+//     cartCategories
+//   );
+
+//   console.log(
+//     "Coupon Categories:",
+//     coupon.applicableProducts
+//   );
+
+//   // category match
+//   const matched =
+//     coupon.applicableProducts.some(
+//       (category) =>
+//         cartCategories.includes(
+//           category
+//         )
+//     );
+
+//   if (!matched) {
+
+//     return res.status(400).json({
+//       success: false,
+//       message:
+//         "Coupon not applicable on selected categories",
+//     });
+//   }
+// }
+
+import mongoose from "mongoose";
+
+if (
+  coupon.applicableType === "SPECIFIC"
+) {
+
+  const cartProductIds =
+    products.map(
+      (item) => item.productId
+    );
+
+  const objectIds =
+    cartProductIds.map(
+      (id) =>
+        new mongoose.Types.ObjectId(id)
+    );
+
+  const cartProducts =
+    await Product.find({
+      _id: {
+        $in: objectIds,
+      },
+    });
+
+  console.log(cartProducts);
+
+  const cartCategories =
+    cartProducts.map(
+      (product) => product.category
+    );
+
+  console.log(
+    "Cart Categories:",
+    cartCategories
+  );
+
+  console.log(
+    "Coupon Categories:",
+    coupon.applicableProducts
+  );
+
+  const matched =
+    coupon.applicableProducts.some(
+      (category) =>
+        cartCategories.some(
+          (cartCat) =>
+            cartCat
+              ?.trim()
+              .toLowerCase() ===
+            category
+              ?.trim()
+              .toLowerCase()
+        )
+    );
+
+  if (!matched) {
+
+    return res.status(400).json({
+      success: false,
+      message:
+        "Coupon not applicable on selected categories",
+    });
+  }
+}
     let discount = 0;
 
     if (
@@ -297,76 +391,46 @@ export const getApplicableCoupons = async (
           "Coupon usage limit reached";
       }
 
+      else if (
+        coupon.applicableType === "SPECIFIC"
+      ) {
 
-      // else if (
-      //   coupon.applicableType ===
-      //   "SPECIFIC"
-      // ) {
+        // cart product ids
+        const cartProductIds = products.map(
+          (item) => item.productId
+        );
 
-      //   // CART CATEGORIES
-      //   const cartCategories =
-      //     products.map(
-      //       (item) =>
-      //         item.category?.trim()
-      //     );
+        // fetch products from DB
+        const cartProducts = await Product.find({
+          _id: { $in: cartProductIds }
+        });
 
-      //   // MATCH CATEGORY
-      //   const matched =
-      //     coupon.applicableProducts.some(
-      //       (category) =>
-      //         cartCategories.includes(
-      //           category.trim()
-      //         )
-      //     );
+        // categories from cart
+        const cartCategories = cartProducts.map(
+          (product) => product.category
+        );
 
-      //   if (!matched) {
+        console.log("Cart Categories:", cartCategories);
+        console.log(
+          "Coupon Categories:",
+          coupon.applicableProducts
+        );
 
-      //     isApplicable = false;
+        // match category
+        const matched =
+          coupon.applicableProducts.some(
+            (category) =>
+              cartCategories.includes(category)
+          );
 
-      //     reason =
-      //       "Not applicable on selected categories";
-      //   }
-      // }
-else if (
-  coupon.applicableType === "SPECIFIC"
-) {
+        if (!matched) {
 
-  // cart product ids
-  const cartProductIds = products.map(
-    (item) => item.productId
-  );
+          isApplicable = false;
 
-  // fetch products from DB
-  const cartProducts = await Product.find({
-    _id: { $in: cartProductIds }
-  });
-
-  // categories from cart
-  const cartCategories = cartProducts.map(
-    (product) => product.category
-  );
-
-  console.log("Cart Categories:", cartCategories);
-  console.log(
-    "Coupon Categories:",
-    coupon.applicableProducts
-  );
-
-  // match category
-  const matched =
-    coupon.applicableProducts.some(
-      (category) =>
-        cartCategories.includes(category)
-    );
-
-  if (!matched) {
-
-    isApplicable = false;
-
-    reason =
-      "Not applicable on selected categories";
-  }
-}
+          reason =
+            "Not applicable on selected categories";
+        }
+      }
 
       let discount = 0;
 

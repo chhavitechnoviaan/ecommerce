@@ -10,10 +10,10 @@ import {
 
 const router = express.Router();
 
-  router.get(
-    "/:userId",
-    getCart
-  );
+router.get(
+  "/:userId",
+  getCart
+);
 
 router.post(
   "/add",

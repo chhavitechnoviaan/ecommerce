@@ -1374,7 +1374,7 @@ export default function AdminDashboard() {
           );
 
         const res = await fetch(
-          "${import.meta.env.VITE_API_URL}/api/admin/dashboard",
+          `${import.meta.env.VITE_API_URL}/api/admin/dashboard`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

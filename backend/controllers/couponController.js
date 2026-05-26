@@ -247,9 +247,6 @@ export const getApplicableCoupons = async (
 
       let reason = "";
 
-      // =========================
-      // EXPIRED CHECK
-      // =========================
 
       if (
         coupon.expiryDate &&
@@ -262,9 +259,6 @@ export const getApplicableCoupons = async (
         reason = "Coupon Expired";
       }
 
-      // =========================
-      // MIN ORDER CHECK
-      // =========================
 
       else if (
         subtotal < coupon.minimumOrder
@@ -276,9 +270,6 @@ export const getApplicableCoupons = async (
           `Minimum order should be ₹${coupon.minimumOrder}`;
       }
 
-      // =========================
-      // FIRST ORDER CHECK
-      // =========================
 
       else if (
         coupon.usageLimitType ===
@@ -292,9 +283,6 @@ export const getApplicableCoupons = async (
           "Only valid for first order";
       }
 
-      // =========================
-      // LIMITED USAGE CHECK
-      // =========================
 
       else if (
         coupon.usageLimitType ===
@@ -309,43 +297,68 @@ export const getApplicableCoupons = async (
           "Coupon usage limit reached";
       }
 
-      // =========================
-      // CATEGORY CHECK
-      // =========================
 
+      // else if (
+      //   coupon.applicableType ===
+      //   "SPECIFIC"
+      // ) {
+
+      //   // CART CATEGORIES
+      //   const cartCategories =
+      //     products.map(
+      //       (item) =>
+      //         item.category?.trim()
+      //     );
+
+      //   // MATCH CATEGORY
+      //   const matched =
+      //     coupon.applicableProducts.some(
+      //       (category) =>
+      //         cartCategories.includes(
+      //           category.trim()
+      //         )
+      //     );
+
+      //   if (!matched) {
+
+      //     isApplicable = false;
+
+      //     reason =
+      //       "Not applicable on selected categories";
+      //   }
+      // }
       else if (
-        coupon.applicableType ===
-        "SPECIFIC"
-      ) {
+  coupon.applicableType === "SPECIFIC"
+) {
 
-        // CART CATEGORIES
-        const cartCategories =
-          products.map(
-            (item) =>
-              item.category?.trim()
-          );
+  const cartCategories = products.map(
+    (item) =>
+      item.category?.trim().toLowerCase()
+  );
 
-        // MATCH CATEGORY
-        const matched =
-          coupon.applicableProducts.some(
-            (category) =>
-              cartCategories.includes(
-                category.trim()
-              )
-          );
+  console.log("Cart Categories:", cartCategories);
 
-        if (!matched) {
+  console.log(
+    "Coupon Categories:",
+    coupon.applicableProducts
+  );
 
-          isApplicable = false;
+  const matched =
+    coupon.applicableProducts.some(
+      (cat) =>
+        cartCategories.includes(
+          cat.trim().toLowerCase()
+        )
+    );
 
-          reason =
-            "Not applicable on selected categories";
-        }
-      }
+  if (!matched) {
 
-      // =========================
-      // DISCOUNT CALCULATION
-      // =========================
+    isApplicable = false;
+
+    reason =
+      "Not applicable on selected categories";
+  }
+}
 
       let discount = 0;
 
@@ -366,10 +379,6 @@ export const getApplicableCoupons = async (
             coupon.discountValue;
         }
       }
-
-      // =========================
-      // PUSH COUPON
-      // =========================
 
       allCoupons.push({
         ...coupon._doc,

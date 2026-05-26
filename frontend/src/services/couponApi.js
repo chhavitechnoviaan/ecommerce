@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "http://localhost:5000/api/coupons";
+  `${import.meta.env.VITE_API_URL}/api/coupons`;
 
 // GET
 export const getCouponsAPI =

@@ -154,7 +154,7 @@ const user = storedUser
       if (user) {
 
         const response = await axios.post(
-          "http://localhost:5000/api/cart/add",
+          "${import.meta.env.VITE_API_URL}/api/cart/add",
           {
             userId: user.id,
 

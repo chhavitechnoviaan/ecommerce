@@ -56,7 +56,7 @@ const Collections = ({ active }) => {
     const fetchProducts = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:5000/api/products/all"
+                `${import.meta.env.VITE_API_URL}/api/products/all`
             );
 
             setProducts(res.data);
@@ -88,7 +88,7 @@ const Collections = ({ active }) => {
         if (result.isConfirmed) {
 
             await axios.delete(
-                `http://localhost:5000/api/products/delete/${id}`
+                `${import.meta.env.VITE_API_URL}/api/products/delete/${id}`
             );
 
             Swal.fire({

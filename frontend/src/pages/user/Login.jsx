@@ -40,7 +40,7 @@ export default function Login() {
 
       const response = await axios.post(
         // "https://ecommerce-production-f584.up.railway.app/api/auth/login",
-        "http://localhost:5000/api/auth/login",
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
         {
           email: formData.email,
           password: formData.password,

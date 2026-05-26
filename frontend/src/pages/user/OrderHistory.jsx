@@ -864,7 +864,7 @@ export default function OrderHistory() {
       // );
 
       const res = await axios.get(
-        `http://localhost:5000/api/orders/user/${finalUserId}`
+        `${import.meta.env.VITE_API_URL}/api/orders/user/${finalUserId}`
       );
       setOrders(res.data.orders);
 

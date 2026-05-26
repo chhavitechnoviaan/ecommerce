@@ -97,7 +97,7 @@ export default function TrackOrders() {
       //   `http://localhost:5000/api/orders/user`
       // );
       const res = await axios.get(
-  `http://localhost:5000/api/orders/user/${userId}`
+  `${import.meta.env.VITE_API_URL}/api/orders/user/${userId}`
 );
 
       setOrders(res.data.orders);

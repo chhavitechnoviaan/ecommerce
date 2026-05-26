@@ -309,7 +309,7 @@ const Navbar = () => {
         if (!user) return;
 
         const response = await axios.get(
-          `http://localhost:5000/api/cart/${user.id}`
+          `${import.meta.env.VITE_API_URL}/api/cart/${user.id}`
         );
 
         if (response.data.success) {

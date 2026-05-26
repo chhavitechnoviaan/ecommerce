@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "http://localhost:5000/api/notifications";
+  `${import.meta.env.VITE_API_URL}/api/notifications`;
 
 export const getNotificationsAPI =
   async () => {

@@ -314,7 +314,7 @@ export default function CartSummary() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        `http://localhost:5000/api/cart/${user.id}`,
+        `${import.meta.env.VITE_API_URL}/api/cart/${user.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -346,7 +346,7 @@ export default function CartSummary() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:5000/api/address/user-addresses",
+        `${import.meta.env.VITE_API_URL}/api/address/user-addresses`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -396,7 +396,7 @@ export default function CartSummary() {
 
         const response =
           await axios.post(
-            "http://localhost:5000/api/coupons/applicable",
+            `${import.meta.env.VITE_API_URL}/api/coupons/applicable`,
             {
               subtotal,
               products: cartItems,
@@ -452,7 +452,7 @@ export default function CartSummary() {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/coupons/apply",
+        `${import.meta.env.VITE_API_URL}/api/coupons/apply`,
         {
           couponCode: code,
           subtotal,
@@ -498,7 +498,7 @@ export default function CartSummary() {
 
         const response =
           await axios.delete(
-            "http://localhost:5000/api/cart/remove",
+            `${import.meta.env.VITE_API_URL}/api/cart/remove`,
             {
               data: {
                 userId: user.id,
@@ -546,7 +546,7 @@ export default function CartSummary() {
 
         const response =
           await axios.put(
-            "http://localhost:5000/api/cart/update",
+            `${import.meta.env.VITE_API_URL}/api/cart/update`,
             {
               userId: user.id,
               productId,
@@ -585,7 +585,7 @@ export default function CartSummary() {
 
         const response =
           await axios.post(
-            "http://localhost:5000/api/address/add",
+            `${import.meta.env.VITE_API_URL}/api/address/add`,
             shippingData,
             {
               headers: {
@@ -700,7 +700,7 @@ export default function CartSummary() {
 
         const response =
           await axios.post(
-            "http://localhost:5000/api/orders/place-order",
+            `${import.meta.env.VITE_API_URL}/api/orders/place-order`,
             {
               user: user?.id,
 
@@ -779,7 +779,7 @@ export default function CartSummary() {
 
         const { data } =
           await axios.post(
-            "http://localhost:5000/api/payment/capturePayment",
+            `${import.meta.env.VITE_API_URL}/api/payment/capturePayment`,
             {
               amount,
               currency: "INR",
@@ -813,7 +813,7 @@ export default function CartSummary() {
 
               const verifyResponse =
                 await axios.post(
-                  "http://localhost:5000/api/payment/verifyPayment",
+                  `${import.meta.env.VITE_API_URL}/api/payment/verifyPayment`,
                   {
                     razorpay_order_id:
                       response.razorpay_order_id,
@@ -1328,7 +1328,7 @@ export default function CartSummary() {
                                       );
 
                                     await axios.delete(
-                                      `http://localhost:5000/api/address/delete/${item._id}`,
+                                      `${import.meta.env.VITE_API_URL}/api/address/delete/${item._id}`,
                                       {
                                         headers:
                                         {

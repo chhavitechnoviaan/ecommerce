@@ -12,7 +12,7 @@ import {
   FiPlus,
 } from "react-icons/fi";
 
-const API = "http://localhost:5000/api/products";
+const API = `${import.meta.env.VITE_API_URL}/api/products`;
 
 export default function Inventory({
   setShowProduct,

@@ -2,44 +2,44 @@ import Coupon from "../models/Coupon.js";
 import Product from "../models/Product.js";
 
 export const createCoupon = async (
-  req,
-  res
+    req,
+    res
 ) => {
-  try {
-    const coupon =
-      await Coupon.create(req.body);
-    res.status(201).json({
-      success: true,
-      coupon,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+    try {
+        const coupon =
+            await Coupon.create(req.body);
+        res.status(201).json({
+            success: true,
+            coupon,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
 // GET ALL COUPONS
 export const getCoupons = async (req, res) => {
 
-  try {
+    try {
 
-    const coupons = await Coupon.find().sort({
-      createdAt: -1,
-    });
+        const coupons = await Coupon.find().sort({
+            createdAt: -1,
+        });
 
-    res.status(200).json({
-      success: true,
-      coupons,
-    });
+        res.status(200).json({
+            success: true,
+            coupons,
+        });
 
-  } catch (error) {
+    } catch (error) {
 
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
 // APPLY COUPON
 export const applyCoupon = async (
@@ -81,7 +81,7 @@ export const applyCoupon = async (
     if (
       coupon.expiryDate &&
       new Date() >
-      new Date(coupon.expiryDate)
+        new Date(coupon.expiryDate)
     ) {
 
       return res.status(400).json({
@@ -104,7 +104,7 @@ export const applyCoupon = async (
 
     if (
       coupon.usageLimitType ===
-      "FIRST_ORDER_ONLY" &&
+        "FIRST_ORDER_ONLY" &&
       !isFirstOrder
     ) {
 
@@ -119,7 +119,7 @@ export const applyCoupon = async (
 
     if (
       coupon.usageLimitType ===
-      "LIMITED"
+        "LIMITED"
     ) {
 
       if (
@@ -199,28 +199,28 @@ export const applyCoupon = async (
 };
 // DELETE COUPON
 export const deleteCoupon = async (
-  req,
-  res
+    req,
+    res
 ) => {
-  try {
+    try {
 
-    await Coupon.findByIdAndDelete(
-      req.params.id
-    );
+        await Coupon.findByIdAndDelete(
+            req.params.id
+        );
 
-    res.status(200).json({
-      success: true,
-      message:
-        "Coupon deleted successfully",
-    });
+        res.status(200).json({
+            success: true,
+            message:
+                "Coupon deleted successfully",
+        });
 
-  } catch (error) {
+    } catch (error) {
 
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
 // GET APPLICABLE COUPONS
 // export const getApplicableCoupons = async (
@@ -363,7 +363,7 @@ export const getApplicableCoupons = async (
       if (
         coupon.expiryDate &&
         new Date() >
-        new Date(coupon.expiryDate)
+          new Date(coupon.expiryDate)
       ) {
 
         isApplicable = false;
@@ -391,7 +391,7 @@ export const getApplicableCoupons = async (
 
       else if (
         coupon.usageLimitType ===
-        "FIRST_ORDER_ONLY" &&
+          "FIRST_ORDER_ONLY" &&
         !isFirstOrder
       ) {
 
@@ -407,9 +407,9 @@ export const getApplicableCoupons = async (
 
       else if (
         coupon.usageLimitType ===
-        "LIMITED" &&
+          "LIMITED" &&
         coupon.usedCount >=
-        coupon.usageLimit
+          coupon.usageLimit
       ) {
 
         isApplicable = false;

@@ -123,11 +123,10 @@ const couponSchema = new mongoose.Schema(
 
 
         applicableProducts: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
-            },
-        ],
+        {
+          type: String,
+        },
+      ],
 
         usedCount: {
             type: Number,

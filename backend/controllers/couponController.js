@@ -223,115 +223,6 @@ export const deleteCoupon = async (
     }
 };
 // GET APPLICABLE COUPONS
-// export const getApplicableCoupons = async (
-//   req,
-//   res
-// ) => {
-//   try {
-
-//     const {
-//       subtotal,
-//       products,
-//       isFirstOrder,
-//     } = req.body;
-
-//     const coupons = await Coupon.find({
-//       isActive: true,
-//     });
-
-//     const applicableCoupons = [];
-
-//     for (const coupon of coupons) {
-
-//       // EXPIRED
-//       if (
-//         coupon.expiryDate &&
-//         new Date() >
-//           new Date(coupon.expiryDate)
-//       ) {
-//         continue;
-//       }
-
-//       // MIN ORDER
-//       if (
-//         subtotal < coupon.minimumOrder
-//       ) {
-//         continue;
-//       }
-
-//       // FIRST ORDER
-//       if (
-//         coupon.usageLimitType ===
-//           "FIRST_ORDER_ONLY" &&
-//         !isFirstOrder
-//       ) {
-//         continue;
-//       }
-
-//       // PRODUCT MATCH
-//       if (
-//         coupon.applicableType ===
-//         "SPECIFIC"
-//       ) {
-
-//         const cartProductIds =
-//           products.map(
-//             (item) =>
-//               item.productId.toString()
-//           );
-
-//         const matched =
-//           coupon.applicableProducts.some(
-//             (id) =>
-//               cartProductIds.includes(
-//                 id.toString()
-//               )
-//           );
-
-//         if (!matched) {
-//           continue;
-//         }
-//       }
-
-//       // CALCULATE DISCOUNT
-//       let discount = 0;
-
-//       if (
-//         coupon.discountType ===
-//         "PERCENTAGE"
-//       ) {
-
-//         discount =
-//           (subtotal *
-//             coupon.discountValue) /
-//           100;
-
-//       } else {
-
-//         discount =
-//           coupon.discountValue;
-//       }
-
-//       applicableCoupons.push({
-//         ...coupon._doc,
-//         calculatedDiscount:
-//           discount,
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       coupons: applicableCoupons,
-//     });
-
-//   } catch (error) {
-
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
 export const getApplicableCoupons = async (
   req,
   res
@@ -419,7 +310,7 @@ export const getApplicableCoupons = async (
       }
 
       // =========================
-      // PRODUCT CHECK
+      // CATEGORY CHECK
       // =========================
 
       else if (
@@ -427,17 +318,19 @@ export const getApplicableCoupons = async (
         "SPECIFIC"
       ) {
 
-        const cartProductIds =
+        // CART CATEGORIES
+        const cartCategories =
           products.map(
             (item) =>
-              item.productId.toString()
+              item.category?.trim()
           );
 
+        // MATCH CATEGORY
         const matched =
           coupon.applicableProducts.some(
-            (id) =>
-              cartProductIds.includes(
-                id.toString()
+            (category) =>
+              cartCategories.includes(
+                category.trim()
               )
           );
 
@@ -446,7 +339,7 @@ export const getApplicableCoupons = async (
           isApplicable = false;
 
           reason =
-            "Not applicable on selected products";
+            "Not applicable on selected categories";
         }
       }
 
@@ -465,8 +358,7 @@ export const getApplicableCoupons = async (
 
           discount =
             (subtotal *
-              coupon.discountValue) /
-            100;
+              coupon.discountValue) / 100;
 
         } else {
 

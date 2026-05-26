@@ -14,9 +14,10 @@ import userRoutes from "./routes/userRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import couponRoutes from "./routes/couponRoutes.js";
 import dashboardRoutes
-from "./routes/dashboardRoutes.js";
+  from "./routes/dashboardRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import path from "path";
 dotenv.config();
 
 const app = express();
@@ -34,26 +35,28 @@ app.use(
   })
 );
 
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
+
+app.use("/uploads",express.static(path.join(process.cwd(), "uploads")));
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"));
+  .then(() => console.log("MongoDB Connected"));
 
 // ROUTES
 app.use("/api/auth", authRoutes);
-app.use("/api/address",addressRoutes);
+app.use("/api/address", addressRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/cart",cartRoutes);
+app.use("/api/cart", cartRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/settings",settingsRoutes);
+app.use("/api/settings", settingsRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/notifications",notificationRoutes);
+app.use("/api/notifications", notificationRoutes);
 app.use("/api/coupons", couponRoutes);
-app.use("/api/dashboard",dashboardRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/contact",contactRoutes);
+app.use("/api/contact", contactRoutes);
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {

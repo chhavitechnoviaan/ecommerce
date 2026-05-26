@@ -6,7 +6,9 @@ import {
   deleteProduct,
   updateProduct
 } from "../controllers/productController.js";
-import upload from "../middleware/uploadMiddleware.js";
+import {
+  upload,
+} from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -18,7 +20,7 @@ router.post(
 
 router.get("/all", getProducts);
 
-router.delete("/:id", deleteProduct);   
+router.delete("/:id", deleteProduct);
 router.put(
   "/update/:id",
   upload.array("images", 8),

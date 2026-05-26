@@ -121,11 +121,6 @@ const couponSchema = new mongoose.Schema(
             default: "UNLIMITED",
         },
 
-        applicableType: {
-            type: String,
-            enum: ["ALL", "SPECIFIC"],
-            default: "ALL",
-        },
 
         applicableProducts: [
             {
@@ -166,15 +161,6 @@ const couponSchema = new mongoose.Schema(
             },
         ],
 
-        usageLimitType: {
-            type: String,
-            enum: [
-                "UNLIMITED",
-                "FIRST_ORDER_ONLY",
-                "LIMITED",
-            ],
-            default: "UNLIMITED",
-        },
     },
 
     {

@@ -4,7 +4,8 @@ import {
   createProduct,
   getProducts,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  getSingleProduct
 } from "../controllers/productController.js";
 import {
   upload,
@@ -17,7 +18,8 @@ router.post(
   upload.array("images", 8),
   createProduct
 );
-
+// GET SINGLE PRODUCT
+router.get("/:id", getSingleProduct);
 router.get("/all", getProducts);
 
 router.delete("/delete/:id", deleteProduct);

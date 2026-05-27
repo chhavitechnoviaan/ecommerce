@@ -20,7 +20,7 @@ router.post(
 
 router.get("/all", getProducts);
 
-router.delete("/:id", deleteProduct);
+router.delete("/delete/:id", deleteProduct);
 router.put(
   "/update/:id",
   upload.array("images", 8),

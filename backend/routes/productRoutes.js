@@ -19,8 +19,8 @@ router.post(
   createProduct
 );
 // GET SINGLE PRODUCT
-router.get("/:id", getSingleProduct);
 router.get("/all", getProducts);
+router.get("/:id", getSingleProduct);
 
 router.delete("/delete/:id", deleteProduct);
 router.put(

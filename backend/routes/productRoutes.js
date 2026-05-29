@@ -23,6 +23,10 @@ router.post(
 );
 // GET SINGLE PRODUCT
 router.get("/all", getProducts);
+router.get(
+  "/new-arrivals",
+  getNewArrivalProducts
+);
 router.get("/:id", getSingleProduct);
 
 router.delete("/delete/:id", deleteProduct);
@@ -39,9 +43,6 @@ router.get(
   "/collection/:collection",
   getProductsByCollection
 );
-router.get(
-  "/new-arrivals",
-  getNewArrivalProducts
-);
+
 export default router;
 

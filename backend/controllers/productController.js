@@ -1,67 +1,15 @@
 // import Product from "../models/Product.js";
 // import fs from "fs";
 // import path from "path";
+
 // import {
 //   createNotification,
 // } from "../services/notificationService.js";
+
+// // ========================================
 // // CREATE PRODUCT
-// // export const createProduct = async (req, res) => {
-// //   try {
-// //     const imageUrls = req.files.map(
-// //       (file) =>
-// //         `http://localhost:5000/uploads/${file.filename}`
-// //     );
+// // ========================================
 
-// //     const product = new Product({
-// //       ...req.body,
-
-// //       tags: JSON.parse(req.body.tags || "[]"),
-
-// //       variants: JSON.parse(
-// //         req.body.variants || "[]"
-// //       ),
-
-// //       extraFields: JSON.parse(
-// //         req.body.extraFields || "[]"
-// //       ),
-
-// //       images: imageUrls,
-// //     });
-
-// //     // if (
-// //     //   updatedProduct.stockQty <= 5
-// //     // ) {
-
-// //     //   await createNotification({
-// //     //     title: "Low Stock Alert",
-
-// //     //     message: `${updatedProduct.product} stock is very low`,
-
-// //     //     category: "Inventory",
-
-// //     //     priority: "high",
-
-// //     //     relatedId:
-// //     //       updatedProduct._id,
-
-// //     //     type: "LOW_STOCK",
-// //     //   });
-// //     // }
-
-// //     await product.save();
-
-// //     res.status(201).json({
-// //       success: true,
-// //       product,
-// //     });
-
-// //   } catch (error) {
-// //     res.status(500).json({
-// //       success: false,
-// //       message: error.message,
-// //     });
-// //   }
-// // };
 // export const createProduct = async (
 //   req,
 //   res
@@ -69,14 +17,16 @@
 //   try {
 
 //     const baseUrl =
-//       process.env.BASE_URL ||
-//       "http://localhost:5000";
+//       process.env.BASE_URL;
+//     console.log(process.env.BASE_URL);
+//     // IMAGE URLS
+//     const imageUrls =
+//       req.files?.map(
+//         (file) =>
+//           `${baseUrl}/uploads/products/${file.filename}`
+//       ) || [];
 
-//     const imageUrls = req.files.map(
-//       (file) =>
-//         `${baseUrl}/uploads/products/${file.filename}`
-//     );
-
+//     // CREATE PRODUCT
 //     const product = new Product({
 //       ...req.body,
 
@@ -97,6 +47,28 @@
 
 //     await product.save();
 
+//     // LOW STOCK NOTIFICATION
+//     if (
+//       product.stockQty <= 5
+//     ) {
+
+//       await createNotification({
+//         title: "Low Stock Alert",
+
+//         message: `${product.product} stock is very low`,
+
+//         category: "Inventory",
+
+//         priority: "high",
+
+//         relatedId:
+//           product._id,
+
+//         type: "LOW_STOCK",
+//       });
+
+//     }
+
 //     res.status(201).json({
 //       success: true,
 //       product,
@@ -111,66 +83,148 @@
 
 //   }
 // };
-// // GET PRODUCTS
-// export const getProducts = async (req, res) => {
-//   try {
-//     const products = await Product.find();
 
-//     res.json(products);
+// // ========================================
+// // GET PRODUCTS
+// // ========================================
+
+// export const getProducts = async (
+//   req,
+//   res
+// ) => {
+//   try {
+
+//     const products =
+//       await Product.find().sort({
+//         createdAt: -1,
+//       });
+
+//     res.status(200).json({
+//       success: true,
+//       products,
+//     });
+
 //   } catch (error) {
+
 //     res.status(500).json({
+//       success: false,
 //       message: error.message,
 //     });
+
 //   }
 // };
 
+// // ========================================
 // // UPDATE PRODUCT
-// export const updateProduct = async (req, res) => {
+// // ========================================
+
+// export const updateProduct = async (
+//   req,
+//   res
+// ) => {
 //   try {
-//     const product = await Product.findById(req.params.id);
+
+//     const product =
+//       await Product.findById(
+//         req.params.id
+//       );
 
 //     if (!product) {
+
 //       return res.status(404).json({
 //         success: false,
-//         message: "Product not found",
+//         message:
+//           "Product not found",
 //       });
+
 //     }
 
-//     let imageUrls = product.images;
+//     const baseUrl =
+//       process.env.BASE_URL;
 
-//     if (req.files && req.files.length > 0) {
+//     let imageUrls =
+//       product.images;
 
-//       // old images delete
-//       product.images.forEach((img) => {
-//         const filename = img.split("/uploads/")[1];
+//     // ====================================
+//     // NEW IMAGES
+//     // ====================================
 
-//         const filePath = path.join(
-//           "uploads",
-//           filename
-//         );
+//     if (
+//       req.files &&
+//       req.files.length > 0
+//     ) {
 
-//         if (fs.existsSync(filePath)) {
-//           fs.unlinkSync(filePath);
+//       // DELETE OLD IMAGES
+//       product.images.forEach(
+//         (img) => {
+
+//           const filename =
+//             img.split(
+//               "/uploads/products/"
+//             )[1];
+
+//           if (!filename) return;
+
+//           const filePath =
+//             path.join(
+//               process.cwd(),
+//               "uploads",
+//               "products",
+//               filename
+//             );
+
+//           if (
+//             fs.existsSync(filePath)
+//           ) {
+
+//             fs.unlinkSync(filePath);
+
+//           }
 //         }
-//       });
-
-//       imageUrls = req.files.map(
-//         (file) =>
-//           `http://localhost:5000/uploads/${file.filename}`
 //       );
+
+//       // NEW IMAGE URLS
+//       imageUrls =
+//         req.files.map(
+//           (file) =>
+//             `${baseUrl}/uploads/products/${file.filename}`
+//         );
 //     }
 
-//     const updatedProduct = await Product.findByIdAndUpdate(
-//       req.params.id,
-//       {
-//         ...req.body,
-//         tags: JSON.parse(req.body.tags || "[]"),
-//         variants: JSON.parse(req.body.variants || "[]"),
-//         extraFields: JSON.parse(req.body.extraFields || "[]"),
-//         images: imageUrls,
-//       },
-//       { new: true }
-//     );
+//     // ====================================
+//     // UPDATE PRODUCT
+//     // ====================================
+
+//     const updatedProduct =
+//       await Product.findByIdAndUpdate(
+//         req.params.id,
+//         {
+//           ...req.body,
+
+//           tags: JSON.parse(
+//             req.body.tags || "[]"
+//           ),
+
+//           variants: JSON.parse(
+//             req.body.variants || "[]"
+//           ),
+
+//           extraFields: JSON.parse(
+//             req.body.extraFields ||
+//             "[]"
+//           ),
+
+//           images: imageUrls,
+//         },
+//         {
+//           new: true,
+//         }
+//       );
+
+//     // ====================================
+//     // LOW STOCK NOTIFICATION
+//     // ====================================
+
 //     if (
 //       updatedProduct.stockQty <= 5
 //     ) {
@@ -189,24 +243,114 @@
 
 //         type: "LOW_STOCK",
 //       });
+
 //     }
+
 //     res.status(200).json({
 //       success: true,
-//       product: updatedProduct,
+//       product:
+//         updatedProduct,
 //     });
 
 //   } catch (error) {
+
 //     res.status(500).json({
 //       success: false,
 //       message: error.message,
 //     });
+
 //   }
 // };
 
+// // ========================================
 // // DELETE PRODUCT
-// export const deleteProduct = async (req, res) => {
+// // ========================================
+
+// export const deleteProduct = async (
+//   req,
+//   res
+// ) => {
 //   try {
-//     const product = await Product.findById(req.params.id);
+
+//     const product =
+//       await Product.findById(
+//         req.params.id
+//       );
+
+//     if (!product) {
+
+//       return res.status(404).json({
+//         success: false,
+//         message:
+//           "Product not found",
+//       });
+
+//     }
+
+//     // ====================================
+//     // DELETE IMAGES
+//     // ====================================
+
+//     product.images.forEach(
+//       (img) => {
+
+//         const filename =
+//           img.split(
+//             "/uploads/products/"
+//           )[1];
+
+//         if (!filename) return;
+
+//         const filePath =
+//           path.join(
+//             process.cwd(),
+//             "uploads",
+//             "products",
+//             filename
+//           );
+
+//         if (
+//           fs.existsSync(filePath)
+//         ) {
+
+//           fs.unlinkSync(filePath);
+
+//         }
+//       }
+//     );
+
+//     // DELETE PRODUCT
+//     await Product.findByIdAndDelete(
+//       req.params.id
+//     );
+
+//     res.status(200).json({
+//       success: true,
+//       message:
+//         "Product Deleted Successfully",
+//     });
+
+//   } catch (error) {
+
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+
+//   }
+// };
+
+
+// export const getSingleProduct = async (
+//   req,
+//   res
+// ) => {
+//   try {
+
+//     const product =
+//       await Product.findById(
+//         req.params.id
+//       );
 
 //     if (!product) {
 //       return res.status(404).json({
@@ -215,47 +359,27 @@
 //       });
 //     }
 
-//     // delete images
-//     product.images.forEach((img) => {
-//       const filename = img.split("/uploads/")[1];
-
-//       const filePath = path.join(
-//         "uploads",
-//         filename
-//       );
-
-//       if (fs.existsSync(filePath)) {
-//         fs.unlinkSync(filePath);
-//       }
-//     });
-
-//     await Product.findByIdAndDelete(req.params.id);
-
-//     res.json({
+//     res.status(200).json({
 //       success: true,
-//       message: "Product Deleted Successfully",
+//       product,
 //     });
 
 //   } catch (error) {
+
 //     res.status(500).json({
 //       success: false,
 //       message: error.message,
 //     });
+
 //   }
 // };
 
 
 import Product from "../models/Product.js";
-import fs from "fs";
-import path from "path";
-
+import cloudinary from "../config/cloudinary.js";
 import {
   createNotification,
 } from "../services/notificationService.js";
-
-// ========================================
-// CREATE PRODUCT
-// ========================================
 
 export const createProduct = async (
   req,
@@ -263,55 +387,86 @@ export const createProduct = async (
 ) => {
   try {
 
-    const baseUrl =
-      process.env.BASE_URL;
-    console.log(process.env.BASE_URL);
-    // IMAGE URLS
-    const imageUrls =
-      req.files?.map(
-        (file) =>
-          `${baseUrl}/uploads/products/${file.filename}`
-      ) || [];
+    let imageUrls = [];
 
+    // ====================================
+    // UPLOAD IMAGES TO CLOUDINARY
+    // ====================================
+
+    if (
+      req.files &&
+      req.files.length > 0
+    ) {
+
+      for (const file of req.files) {
+
+        const result =
+          await cloudinary.uploader.upload(
+            `data:${file.mimetype};base64,${file.buffer.toString(
+              "base64"
+            )}`,
+            {
+              folder: "products",
+            }
+          );
+
+        imageUrls.push(
+          result.secure_url
+        );
+      }
+    }
+
+    // ====================================
     // CREATE PRODUCT
-    const product = new Product({
-      ...req.body,
+    // ====================================
 
-      tags: JSON.parse(
-        req.body.tags || "[]"
-      ),
+    const product =
+      new Product({
+        ...req.body,
 
-      variants: JSON.parse(
-        req.body.variants || "[]"
-      ),
+        tags: JSON.parse(
+          req.body.tags || "[]"
+        ),
 
-      extraFields: JSON.parse(
-        req.body.extraFields || "[]"
-      ),
+        variants: JSON.parse(
+          req.body.variants || "[]"
+        ),
 
-      images: imageUrls,
-    });
+        extraFields:
+          JSON.parse(
+            req.body.extraFields ||
+            "[]"
+          ),
+
+        images: imageUrls,
+      });
 
     await product.save();
 
+    // ====================================
     // LOW STOCK NOTIFICATION
+    // ====================================
+
     if (
       product.stockQty <= 5
     ) {
 
       await createNotification({
-        title: "Low Stock Alert",
+        title:
+          "Low Stock Alert",
 
         message: `${product.product} stock is very low`,
 
-        category: "Inventory",
+        category:
+          "Inventory",
 
         priority: "high",
 
         relatedId:
           product._id,
 
-        type: "LOW_STOCK",
+        type:
+          "LOW_STOCK",
       });
 
     }
@@ -325,20 +480,17 @@ export const createProduct = async (
 
     res.status(500).json({
       success: false,
-      message: error.message,
+      message:
+        error.message,
     });
 
   }
 };
-
-// ========================================
-// GET PRODUCTS
-// ========================================
-
 export const getProducts = async (
   req,
   res
 ) => {
+
   try {
 
     const products =
@@ -355,20 +507,114 @@ export const getProducts = async (
 
     res.status(500).json({
       success: false,
-      message: error.message,
+      message:
+        error.message,
     });
 
   }
 };
+export const getFilteredProducts =
+  async (req, res) => {
 
-// ========================================
-// UPDATE PRODUCT
-// ========================================
+    try {
+
+      const {
+        productType,
+        category,
+      } = req.params;
+
+      const formattedProductType =
+        productType
+          .replace(/-/g, " ")
+          .toUpperCase()
+          .trim();
+
+      const formattedCategory =
+        category
+          .replace(/-/g, " ")
+          .trim();
+
+      const query = {
+        productType:
+          formattedProductType,
+      };
+
+      if (
+        formattedCategory !==
+        "all"
+      ) {
+
+        query.category =
+          formattedCategory;
+
+      }
+
+      const products =
+        await Product.find(
+          query
+        ).sort({
+          createdAt: -1,
+        });
+
+      res.status(200).json({
+        success: true,
+        products,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+
+    }
+  };
+
+export const getSingleProduct =
+  async (req, res) => {
+
+    try {
+
+      const product =
+        await Product.findById(
+          req.params.id
+        );
+
+      if (!product) {
+
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message:
+              "Product not found",
+          });
+
+      }
+
+      res.status(200).json({
+        success: true,
+        product,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+
+    }
+  };
 
 export const updateProduct = async (
   req,
   res
 ) => {
+
   try {
 
     const product =
@@ -386,9 +632,6 @@ export const updateProduct = async (
 
     }
 
-    const baseUrl =
-      process.env.BASE_URL;
-
     let imageUrls =
       product.images;
 
@@ -401,41 +644,43 @@ export const updateProduct = async (
       req.files.length > 0
     ) {
 
-      // DELETE OLD IMAGES
-      product.images.forEach(
-        (img) => {
+      // DELETE OLD CLOUDINARY IMAGES
 
-          const filename =
-            img.split(
-              "/uploads/products/"
-            )[1];
+      for (const img of product.images) {
 
-          if (!filename) return;
+        const splitUrl =
+          img.split("/");
 
-          const filePath =
-            path.join(
-              process.cwd(),
-              "uploads",
-              "products",
-              filename
-            );
+        const imageName =
+          splitUrl[
+            splitUrl.length - 1
+          ].split(".")[0];
 
-          if (
-            fs.existsSync(filePath)
-          ) {
-
-            fs.unlinkSync(filePath);
-
-          }
-        }
-      );
-
-      // NEW IMAGE URLS
-      imageUrls =
-        req.files.map(
-          (file) =>
-            `${baseUrl}/uploads/products/${file.filename}`
+        await cloudinary.uploader.destroy(
+          `products/${imageName}`
         );
+      }
+
+      // UPLOAD NEW IMAGES
+
+      imageUrls = [];
+
+      for (const file of req.files) {
+
+        const result =
+          await cloudinary.uploader.upload(
+            `data:${file.mimetype};base64,${file.buffer.toString(
+              "base64"
+            )}`,
+            {
+              folder: "products",
+            }
+          );
+
+        imageUrls.push(
+          result.secure_url
+        );
+      }
     }
 
     // ====================================
@@ -449,19 +694,26 @@ export const updateProduct = async (
           ...req.body,
 
           tags: JSON.parse(
-            req.body.tags || "[]"
-          ),
-
-          variants: JSON.parse(
-            req.body.variants || "[]"
-          ),
-
-          extraFields: JSON.parse(
-            req.body.extraFields ||
+            req.body.tags ||
             "[]"
           ),
 
-          images: imageUrls,
+          variants:
+            JSON.parse(
+              req.body
+                .variants ||
+              "[]"
+            ),
+
+          extraFields:
+            JSON.parse(
+              req.body
+                .extraFields ||
+              "[]"
+            ),
+
+          images:
+            imageUrls,
         },
         {
           new: true,
@@ -473,22 +725,27 @@ export const updateProduct = async (
     // ====================================
 
     if (
-      updatedProduct.stockQty <= 5
+      updatedProduct.stockQty <=
+      5
     ) {
 
       await createNotification({
-        title: "Low Stock Alert",
+        title:
+          "Low Stock Alert",
 
         message: `${updatedProduct.product} stock is very low`,
 
-        category: "Inventory",
+        category:
+          "Inventory",
 
-        priority: "high",
+        priority:
+          "high",
 
         relatedId:
           updatedProduct._id,
 
-        type: "LOW_STOCK",
+        type:
+          "LOW_STOCK",
       });
 
     }
@@ -503,20 +760,17 @@ export const updateProduct = async (
 
     res.status(500).json({
       success: false,
-      message: error.message,
+      message:
+        error.message,
     });
 
   }
 };
-
-// ========================================
-// DELETE PRODUCT
-// ========================================
-
 export const deleteProduct = async (
   req,
   res
 ) => {
+
   try {
 
     const product =
@@ -535,38 +789,26 @@ export const deleteProduct = async (
     }
 
     // ====================================
-    // DELETE IMAGES
+    // DELETE CLOUDINARY IMAGES
     // ====================================
 
-    product.images.forEach(
-      (img) => {
+    for (const img of product.images) {
 
-        const filename =
-          img.split(
-            "/uploads/products/"
-          )[1];
+      const splitUrl =
+        img.split("/");
 
-        if (!filename) return;
+      const imageName =
+        splitUrl[
+          splitUrl.length - 1
+        ].split(".")[0];
 
-        const filePath =
-          path.join(
-            process.cwd(),
-            "uploads",
-            "products",
-            filename
-          );
-
-        if (
-          fs.existsSync(filePath)
-        ) {
-
-          fs.unlinkSync(filePath);
-
-        }
-      }
-    );
+      await cloudinary.uploader.destroy(
+        `products/${imageName}`
+      );
+    }
 
     // DELETE PRODUCT
+
     await Product.findByIdAndDelete(
       req.params.id
     );
@@ -581,41 +823,8 @@ export const deleteProduct = async (
 
     res.status(500).json({
       success: false,
-      message: error.message,
-    });
-
-  }
-};
-
-
-export const getSingleProduct = async (
-  req,
-  res
-) => {
-  try {
-
-    const product =
-      await Product.findById(
-        req.params.id
-      );
-
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      product,
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
+      message:
+        error.message,
     });
 
   }

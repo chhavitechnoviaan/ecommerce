@@ -5,7 +5,8 @@ import {
   getProducts,
   deleteProduct,
   updateProduct,
-  getSingleProduct
+  getSingleProduct,
+    getFilteredProducts,
 } from "../controllers/productController.js";
 import {
   upload,
@@ -28,6 +29,9 @@ router.put(
   upload.array("images", 8),
   updateProduct
 );
-
+router.get(
+  "/filter/:productType/:category",
+  getFilteredProducts
+);
 export default router;
 

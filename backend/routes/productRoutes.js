@@ -6,7 +6,8 @@ import {
   deleteProduct,
   updateProduct,
   getSingleProduct,
-    getFilteredProducts,
+  getFilteredProducts,
+  getProductsByCollection,
 } from "../controllers/productController.js";
 import {
   upload,
@@ -32,6 +33,10 @@ router.put(
 router.get(
   "/filter/:productType/:category",
   getFilteredProducts
+);
+router.get(
+  "/collection/:collection",
+  getProductsByCollection
 );
 export default router;
 

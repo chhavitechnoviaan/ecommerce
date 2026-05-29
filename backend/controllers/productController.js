@@ -903,3 +903,49 @@ export const deleteProduct = async (
 
   }
 };
+
+// ====================================
+// GET PRODUCTS BY PRIMARY COLLECTION
+// ====================================
+
+export const getProductsByCollection =
+  async (req, res) => {
+
+    try {
+
+      const { collection } =
+        req.params;
+
+      const formattedCollection =
+        collection
+          .replace(/-/g, " ")
+          .trim();
+
+      const products =
+        await Product.find({
+          primaryCollection: {
+            $regex:
+              new RegExp(
+                `^${formattedCollection}$`,
+                "i"
+              ),
+          },
+        }).sort({
+          createdAt: -1,
+        });
+
+      res.status(200).json({
+        success: true,
+        products,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+
+    }
+  };

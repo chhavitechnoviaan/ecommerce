@@ -513,6 +513,64 @@ export const getProducts = async (
 
   }
 };
+// export const getFilteredProducts =
+//   async (req, res) => {
+
+//     try {
+
+//       const {
+//         productType,
+//         category,
+//       } = req.params;
+
+//       const formattedProductType =
+//         productType
+//           .replace(/-/g, " ")
+//           .toUpperCase()
+//           .trim();
+
+//       const formattedCategory =
+//         category
+//           .replace(/-/g, " ")
+//           .trim();
+
+//       const query = {
+//         productType:
+//           formattedProductType,
+//       };
+
+//       if (
+//         formattedCategory !==
+//         "all"
+//       ) {
+
+//         query.category =
+//           formattedCategory;
+
+//       }
+
+//       const products =
+//         await Product.find(
+//           query
+//         ).sort({
+//           createdAt: -1,
+//         });
+
+//       res.status(200).json({
+//         success: true,
+//         products,
+//       });
+
+//     } catch (error) {
+
+//       res.status(500).json({
+//         success: false,
+//         message:
+//           error.message,
+//       });
+
+//     }
+//   };
 export const getFilteredProducts =
   async (req, res) => {
 
@@ -526,7 +584,6 @@ export const getFilteredProducts =
       const formattedProductType =
         productType
           .replace(/-/g, " ")
-          .toUpperCase()
           .trim();
 
       const formattedCategory =
@@ -535,8 +592,17 @@ export const getFilteredProducts =
           .trim();
 
       const query = {
-        productType:
-          formattedProductType,
+
+        productType: {
+
+          $regex:
+            new RegExp(
+              `^${formattedProductType}$`,
+              "i"
+            ),
+
+        },
+
       };
 
       if (
@@ -544,10 +610,19 @@ export const getFilteredProducts =
         "all"
       ) {
 
-        query.category =
-          formattedCategory;
+        query.category = {
+
+          $regex:
+            new RegExp(
+              `^${formattedCategory}$`,
+              "i"
+            ),
+
+        };
 
       }
+
+      console.log(query);
 
       const products =
         await Product.find(
@@ -571,7 +646,6 @@ export const getFilteredProducts =
 
     }
   };
-
 export const getSingleProduct =
   async (req, res) => {
 

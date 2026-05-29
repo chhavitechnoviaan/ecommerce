@@ -949,3 +949,36 @@ export const getProductsByCollection =
 
     }
   };
+
+// ======================================
+// GET NEW ARRIVAL CATEGORY PRODUCTS
+// ======================================
+
+export const getNewArrivalProducts =
+  async (req, res) => {
+
+    try {
+
+      const products =
+        await Product.find({
+          category:
+            "New Arrival",
+        }).sort({
+          createdAt: -1,
+        });
+
+      res.status(200).json({
+        success: true,
+        products,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+
+    }
+  };

@@ -8,6 +8,7 @@ import {
   getSingleProduct,
   getFilteredProducts,
   getProductsByCollection,
+  getNewArrivalProducts
 } from "../controllers/productController.js";
 import {
   upload,
@@ -37,6 +38,10 @@ router.get(
 router.get(
   "/collection/:collection",
   getProductsByCollection
+);
+router.get(
+  "/new-arrivals",
+  getNewArrivalProducts
 );
 export default router;
 

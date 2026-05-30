@@ -26,7 +26,6 @@ const generateTrackingNumber = () => {
   );
 };
 // PLACE ORDER
-<<<<<<< HEAD
 // export const placeOrder = async (req, res) => {
 
 //   try {
@@ -172,32 +171,15 @@ const generateTrackingNumber = () => {
 //     });
 //   }
 // };
-=======
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
 export const placeOrder = async (req, res) => {
 
   try {
 
-<<<<<<< HEAD
     console.log(
       "Order Data:",
       req.body
     );
 
-=======
-    console.log("Order Data:", req.body);
-
-    // const {
-    //   user,
-    //   items,
-    //   shippingAddress,
-    //   subtotal,
-    //   shipping,
-    //   discount,
-    //   totalAmount,
-    //   paymentMethod,
-    // } = req.body;
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
     const {
       user,
       items,
@@ -210,7 +192,6 @@ export const placeOrder = async (req, res) => {
       couponCode,
       discountAmount,
     } = req.body;
-<<<<<<< HEAD
 
     // =========================================
     // CHECK USER
@@ -323,55 +304,11 @@ export const placeOrder = async (req, res) => {
           couponName:
             couponCode,
         });
-=======
-    // CHECK USER
-    if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "User ID is required",
-      });
-    }
-    // CREATE ORDER
-    const order = await Order.create({
-      orderId: generateOrderId(),
-      trackingNumber: generateTrackingNumber(),
-      user,
-      items,
-      shippingAddress: {
-        fullName: shippingAddress.fullName,
-        mobile: shippingAddress.mobile,
-        email: shippingAddress.email,
-        country: shippingAddress.country,
-        state: shippingAddress.state,
-        city: shippingAddress.city,
-        zipCode: shippingAddress.zipCode,
-        address: shippingAddress.address,
-        landmark: shippingAddress.landmark,
-      },
-      subtotal,
-      shipping,
-      discount,
-      totalAmount,
-      paymentMethod,
-      couponCode,
-      discountAmount,
-      paymentStatus:
-        paymentMethod === "COD"
-          ? "Pending"
-          : "Paid",
-    });
-    if (couponCode) {
-
-      const coupon = await Coupon.findOne({
-        couponName: couponCode,
-      });
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
 
       if (coupon) {
 
         coupon.usedCount += 1;
 
-<<<<<<< HEAD
         coupon.usedBy.push(
           user
         );
@@ -472,72 +409,12 @@ export const placeOrder = async (req, res) => {
       message:
         "Order placed successfully",
 
-=======
-        coupon.usedBy.push(user);
-
-        await coupon.save();
-      }
-    }
-    await createNotification({
-      title: "New Order Received",
-
-      message: `${shippingAddress.fullName} placed a new order worth ₹${totalAmount}`,
-
-      category: "Orders",
-
-      priority: "normal",
-
-      relatedId: order._id,
-
-      type: "NEW_ORDER",
-    });
-
-    // FIND USER CART
-    const cart = await Cart.findOne({
-      user,
-    });
-
-    console.log("CART FOUND:", cart);
-
-    // 0UPDATE CART ITEMS
-    if (cart) {
-
-      cart.items.forEach((cartItem) => {
-
-        const orderedItem = items.find(
-          (item) =>
-            item.productId.toString() ===
-            cartItem.productId.toString()
-        );
-
-        // ONLY ORDERED ITEMS TRUE
-        if (orderedItem) {
-
-          cartItem.orderPlaced = true;
-
-          cartItem.orderedAt = new Date();
-        }
-      });
-
-      // IMPORTANT
-      cart.markModified("items");
-
-      await cart.save();
-
-      console.log("UPDATED CART:", cart);
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Order placed successfully",
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
       order,
     });
 
   } catch (error) {
 
     console.log(error);
-<<<<<<< HEAD
 
     console.log(
       error.message
@@ -549,13 +426,6 @@ export const placeOrder = async (req, res) => {
 
       message:
         error.message,
-=======
-    console.log(error.message);
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
     });
   }
 };

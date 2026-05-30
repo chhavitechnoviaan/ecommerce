@@ -981,7 +981,6 @@ export const getNewArrivalProducts =
       });
 
     }
-<<<<<<< HEAD
   };
 
 
@@ -1011,6 +1010,4 @@ export const getNewArrivalProducts =
       });
 
     }
-=======
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
   };

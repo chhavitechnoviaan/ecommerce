@@ -69,14 +69,11 @@ const productSchema = new mongoose.Schema(
     extraFields: [extraFieldSchema],
 
     images: [String],
-<<<<<<< HEAD
     
     soldCount: {
       type: Number,
       default: 0,
     },
-=======
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b
   },
   {
     timestamps: true,
@@ -87,8 +84,4 @@ const productSchema = new mongoose.Schema(
 const Product =
   mongoose.models.Product ||
   mongoose.model("Product", productSchema);
-<<<<<<< HEAD
 export default Product;
-=======
-  export default Product;
->>>>>>> 8394040dcd8283a93687885ab699df1557a0468b

@@ -69,8 +69,17 @@ const productSchema = new mongoose.Schema(
     extraFields: [extraFieldSchema],
 
     images: [String],
-    
+
     soldCount: {
+      type: Number,
+      default: 0,
+    },
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+
+    totalReviews: {
       type: Number,
       default: 0,
     },

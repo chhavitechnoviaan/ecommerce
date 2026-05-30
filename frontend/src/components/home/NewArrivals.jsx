@@ -555,11 +555,11 @@ export default function NewArrivals() {
 
                   </h3>
 
-                  <p className="mt-2 text-[12px] sm:text-[13px] text-[#666]">
+                  {/* <p className="mt-2 text-[12px] sm:text-[13px] text-[#666]">
 
                     {product.category}
 
-                  </p>
+                  </p> */}
 
                   <p className="mt-3 text-[12px] tracking-[3px] uppercase text-[#111]">
 

@@ -123,11 +123,13 @@ const ContactUs = () => {
 
         {/* 2. Hero Content Core Text Body */}
         <main className="relative z-10 flex-grow flex flex-col items-center justify-center text-center px-4 md:px-0 max-w-3xl mx-auto pt-24 pb-44">
-          <h1 className="text-5xl md:text-[74px] font-normal text-stone-900 leading-[1.15] tracking-tight mb-6">
+          {/* <h1 className="text-5xl md:text-[74px] font-normal text-stone-900 leading-[1.15] tracking-tight mb-6"> */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[74px] font-normal text-stone-900 leading-[1.15] tracking-tight mb-6">
             Connect With Timeless <br /> Luxury
           </h1>
 
-          <p className="font-sans text-xs md:text-[18px] text-stone-950 max-w-xl leading-relaxed tracking-wide mb-10 font-light">
+          {/* <p className="font-sans text-xs md:text-[18px] text-stone-950 max-w-xl leading-relaxed tracking-wide mb-10 font-light"> */}
+          <p className="font-sans text-xs sm:text-sm md:text-[18px] text-stone-950 max-w-xl leading-relaxed tracking-wide mb-10 font-light">
             Our concierge team is here to assist you with elegance and care. Experience personalized service tailored to your exquisite taste.
           </p>
 
@@ -138,10 +140,10 @@ const ContactUs = () => {
       </div>
 
       {/* 3. Info Cards Section (Perfect Image-Overlap Blend Grid with Inner Radial Soft Gradient) */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 -mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
-
+      {/* <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 -mt-24 grid grid-cols-1 md:grid-cols-3 gap-6"> */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-12 -mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Phone Contact Box */}
-        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-12 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
+        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-8 md:p-10 lg:p-12 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.1" stroke="#735C00" className="w-7 h-7 mb-5 transition-transform duration-300 group-hover:scale-110">
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 0 1-7.108-7.108c-.145-.44.02-1.27.397-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
           </svg>
@@ -150,7 +152,7 @@ const ContactUs = () => {
         </div>
 
         {/* Email Contact Box */}
-        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-12 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
+        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-8 md:p-10 lg:p-12flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.1" stroke="#735C00" className="w-7 h-7 mb-5 transition-transform duration-300 group-hover:scale-110">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
           </svg>
@@ -159,7 +161,7 @@ const ContactUs = () => {
         </div>
 
         {/* Working Hours Contact Box */}
-        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-12 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
+        <div className="bg-gradient-to-b from-white/95 to-white/75 backdrop-blur-xl border border-stone-200/50 p-8 md:p-10 lg:p-12 flex flex-col items-center justify-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 ease-in-out transform hover:-translate-y-2 hover:border-[#735C00]/40 hover:shadow-[0_20px_40px_rgba(115,92,0,0.06)] group cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.1" stroke="#735C00" className="w-7 h-7 mb-5 transition-transform duration-300 group-hover:scale-110">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
@@ -169,10 +171,11 @@ const ContactUs = () => {
       </div>
 
       {/* 4. Form & Concierge Layout Container Module */}
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-24 mt-24">
+      {/* <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-24 mt-24"> */}
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-24 mt-24">
 
         {/* Left Grid Side Section: Premium Send an Inquiry Panel */}
-        <div className="lg:col-span-6 bg-white p-8 md:p-14 shadow-[0_15px_50px_rgba(0,0,0,0.02)] border border-stone-100/80 rounded-[4px]">
+        <div className="lg:col-span-6 bg-white p-6 md:p-10 lg:p-14 shadow-[0_15px_50px_rgba(0,0,0,0.02)] border border-stone-100/80 rounded-[4px]">
           <h2 className="font-serif text-4xl text-stone-900 font-normal mb-1 tracking-wide">Send an Inquiry</h2>
           <div className="w-12 h-[1.5px] bg-amber-800/60 mb-12"></div>
 
@@ -181,8 +184,8 @@ const ContactUs = () => {
             className="space-y-10"
             onSubmit={handleSubmit}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
-
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10"> */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 md:gap-x-10 gap-y-8 md:gap-y-10">
               {/* Full Name Form Field */}
               <div className="flex flex-col border-b border-stone-200/80 py-1 focus-within:border-stone-900 transition-colors duration-300">
                 <label className="font-sans text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-1">Full Name</label>
@@ -310,7 +313,8 @@ const ContactUs = () => {
           <div>
             <h2 className="font-serif text-3xl text-stone-900 font-normal mb-8 tracking-wide">Concierge Services</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10"> */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 md:gap-x-10 gap-y-8 md:gap-y-10">
 
               {/* Order Assistance */}
               <div className="flex items-start gap-4 group cursor-pointer">
@@ -373,7 +377,8 @@ const ContactUs = () => {
           <div className="mt-24">
 
             <h2
-              className="text-[42px] text-black mb-10"
+              // className="text-[42px] text-black mb-10"
+              className="text-2xl md:text-3xl lg:text-[42px] text-black mb-10"
               style={{
                 fontFamily: '"Cormorant Garamond", serif',
               }}
@@ -484,7 +489,7 @@ const ContactUs = () => {
 
       {/* LUXURY MAP SECTION */}
       <section
-        className="relative w-full h-[660px] overflow-hidden border-t border-stone-200"
+        className="relative w-full h-[400px] md:h-[550px] lg:h-[660px]overflow-hidden border-t border-stone-200"
         style={{
           backgroundImage: `url(${mapImage})`,
           backgroundSize: "cover",
@@ -498,7 +503,7 @@ const ContactUs = () => {
         {/* Floating Card */}
         <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 z-10">
 
-          <div className="w-[480px] bg-[#f7f5f2]/95 border border-[#d8cfbf] rounded-[14px] p-10 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm">
+          <div className="w-[90%] md:w-[420px] bg-[#f7f5f2]/95 border border-[#d8cfbf] rounded-[14px] p-10 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.05)] backdrop-blur-sm">
 
             {/* Heading */}
             <h2
@@ -530,8 +535,8 @@ const ContactUs = () => {
         </div>
       </section>
 
-      <div className="min-h-screen bg-[#efeded] flex flex-col">
-
+      {/* <div className="min-h-screen bg-[#efeded] flex flex-col"> */}
+<div className="w-full bg-[#efeded]">
         <section className="flex flex-col items-center justify-center pt-28 pb-20">
           <h1
             className="
@@ -566,8 +571,8 @@ const ContactUs = () => {
 
 
         <section className="w-full">
-          <div className="grid grid-cols-5 h-[320px]">
-
+          {/* <div className="grid grid-cols-5 h-[320px]"> */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 h-auto md:h-[320px]">
 
             {[broach1, broach2, broach3, broach4, broach5].map(
               (img, index) => (
@@ -580,9 +585,8 @@ const ContactUs = () => {
                     src={img}
                     alt="demo"
                     className="
-                w-full
-                h-full
-                object-cover
+              
+                w-full h-40 sm:h-48 md:h-full object-cover
                 transition-transform
                 duration-700
                 ease-out
@@ -648,7 +652,7 @@ const ContactUs = () => {
           {/* Heading */}
           <h2
             className="
-            text-[40px]
+            text-2xl md:text-3xl lg:text-[40px]
             leading-none
             text-[#0f172a]
             tracking-wide
@@ -687,11 +691,7 @@ const ContactUs = () => {
               type="email"
               placeholder="Your Email Address"
               className="
-              w-full
-              md:w-[540px]
-              h-[58px]
-              px-8
-              text-[22px]
+              w-full md:w-[540px] h-[50px] md:h-[58px] px-5 md:px-8 text-sm md:text-[22px]
               bg-transparent
               border
               border-[#d7d7d7]
@@ -711,12 +711,10 @@ const ContactUs = () => {
             {/* Button */}
             <button
               className="
-              h-[58px]
-              px-14
+              h-[50px] md:h-[58px] px-10 md:px-14 text-sm md:text-[22px]
               rounded-xl
               bg-[#6b6b6b]
               text-white
-              text-[22px]
               tracking-wide
               uppercase
               transition-all

@@ -33,11 +33,7 @@ import {
 import {
   addToWishlist,
 } from "../../redux/slices/wishlistSlice";
-<<<<<<< HEAD
-
-=======
 import placeholder from "../../assets/images/placeholder.jpg";
->>>>>>> 8bab27cb7a278100ef6c49db99aebd76a75bf21f
 const deliveryOptions = [
   {
     id: 1,

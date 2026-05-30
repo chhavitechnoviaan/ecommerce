@@ -26,22 +26,160 @@ const generateTrackingNumber = () => {
   );
 };
 // PLACE ORDER
+// export const placeOrder = async (req, res) => {
+
+//   try {
+
+//     console.log("Order Data:", req.body);
+
+//     // const {
+//     //   user,
+//     //   items,
+//     //   shippingAddress,
+//     //   subtotal,
+//     //   shipping,
+//     //   discount,
+//     //   totalAmount,
+//     //   paymentMethod,
+//     // } = req.body;
+//     const {
+//       user,
+//       items,
+//       shippingAddress,
+//       subtotal,
+//       shipping,
+//       discount,
+//       totalAmount,
+//       paymentMethod,
+//       couponCode,
+//       discountAmount,
+//     } = req.body;
+//     // CHECK USER
+//     if (!user) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User ID is required",
+//       });
+//     }
+//     // CREATE ORDER
+//     const order = await Order.create({
+//       orderId: generateOrderId(),
+//       trackingNumber: generateTrackingNumber(),
+//       user,
+//       items,
+//       shippingAddress: {
+//         fullName: shippingAddress.fullName,
+//         mobile: shippingAddress.mobile,
+//         email: shippingAddress.email,
+//         country: shippingAddress.country,
+//         state: shippingAddress.state,
+//         city: shippingAddress.city,
+//         zipCode: shippingAddress.zipCode,
+//         address: shippingAddress.address,
+//         landmark: shippingAddress.landmark,
+//       },
+//       subtotal,
+//       shipping,
+//       discount,
+//       totalAmount,
+//       paymentMethod,
+//       couponCode,
+//       discountAmount,
+//       paymentStatus:
+//         paymentMethod === "COD"
+//           ? "Pending"
+//           : "Paid",
+//     });
+//     if (couponCode) {
+
+//       const coupon = await Coupon.findOne({
+//         couponName: couponCode,
+//       });
+
+//       if (coupon) {
+
+//         coupon.usedCount += 1;
+
+//         coupon.usedBy.push(user);
+
+//         await coupon.save();
+//       }
+//     }
+//     await createNotification({
+//       title: "New Order Received",
+
+//       message: `${shippingAddress.fullName} placed a new order worth ₹${totalAmount}`,
+
+//       category: "Orders",
+
+//       priority: "normal",
+
+//       relatedId: order._id,
+
+//       type: "NEW_ORDER",
+//     });
+
+//     // FIND USER CART
+//     const cart = await Cart.findOne({
+//       user,
+//     });
+
+//     console.log("CART FOUND:", cart);
+
+//     // 0UPDATE CART ITEMS
+//     if (cart) {
+
+//       cart.items.forEach((cartItem) => {
+
+//         const orderedItem = items.find(
+//           (item) =>
+//             item.productId.toString() ===
+//             cartItem.productId.toString()
+//         );
+
+//         // ONLY ORDERED ITEMS TRUE
+//         if (orderedItem) {
+
+//           cartItem.orderPlaced = true;
+
+//           cartItem.orderedAt = new Date();
+//         }
+//       });
+
+//       // IMPORTANT
+//       cart.markModified("items");
+
+//       await cart.save();
+
+//       console.log("UPDATED CART:", cart);
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Order placed successfully",
+//       order,
+//     });
+
+//   } catch (error) {
+
+//     console.log(error);
+//     console.log(error.message);
+
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 export const placeOrder = async (req, res) => {
 
   try {
 
-    console.log("Order Data:", req.body);
+    console.log(
+      "Order Data:",
+      req.body
+    );
 
-    // const {
-    //   user,
-    //   items,
-    //   shippingAddress,
-    //   subtotal,
-    //   shipping,
-    //   discount,
-    //   totalAmount,
-    //   paymentMethod,
-    // } = req.body;
     const {
       user,
       items,
@@ -54,120 +192,240 @@ export const placeOrder = async (req, res) => {
       couponCode,
       discountAmount,
     } = req.body;
+
+    // =========================================
     // CHECK USER
+    // =========================================
+
     if (!user) {
+
       return res.status(400).json({
         success: false,
-        message: "User ID is required",
+        message:
+          "User ID is required",
       });
+
     }
+
+    // =========================================
     // CREATE ORDER
-    const order = await Order.create({
-      orderId: generateOrderId(),
-      trackingNumber: generateTrackingNumber(),
-      user,
-      items,
-      shippingAddress: {
-        fullName: shippingAddress.fullName,
-        mobile: shippingAddress.mobile,
-        email: shippingAddress.email,
-        country: shippingAddress.country,
-        state: shippingAddress.state,
-        city: shippingAddress.city,
-        zipCode: shippingAddress.zipCode,
-        address: shippingAddress.address,
-        landmark: shippingAddress.landmark,
-      },
-      subtotal,
-      shipping,
-      discount,
-      totalAmount,
-      paymentMethod,
-      couponCode,
-      discountAmount,
-      paymentStatus:
-        paymentMethod === "COD"
-          ? "Pending"
-          : "Paid",
-    });
+    // =========================================
+
+    const order =
+      await Order.create({
+
+        orderId:
+          generateOrderId(),
+
+        trackingNumber:
+          generateTrackingNumber(),
+
+        user,
+
+        items,
+
+        shippingAddress: {
+
+          fullName:
+            shippingAddress.fullName,
+
+          mobile:
+            shippingAddress.mobile,
+
+          email:
+            shippingAddress.email,
+
+          country:
+            shippingAddress.country,
+
+          state:
+            shippingAddress.state,
+
+          city:
+            shippingAddress.city,
+
+          zipCode:
+            shippingAddress.zipCode,
+
+          address:
+            shippingAddress.address,
+
+          landmark:
+            shippingAddress.landmark,
+        },
+
+        subtotal,
+
+        shipping,
+
+        discount,
+
+        totalAmount,
+
+        paymentMethod,
+
+        couponCode,
+
+        discountAmount,
+
+        paymentStatus:
+          paymentMethod ===
+          "COD"
+            ? "Pending"
+            : "Paid",
+      });
+
+    // =========================================
+    // UPDATE PRODUCT SOLD COUNT
+    // =========================================
+
+    for (const item of items) {
+
+      await Product.findByIdAndUpdate(
+        item.productId,
+        {
+          $inc: {
+            soldCount:
+              item.quantity,
+          },
+        }
+      );
+
+    }
+
+    // =========================================
+    // UPDATE COUPON
+    // =========================================
+
     if (couponCode) {
 
-      const coupon = await Coupon.findOne({
-        couponName: couponCode,
-      });
+      const coupon =
+        await Coupon.findOne({
+          couponName:
+            couponCode,
+        });
 
       if (coupon) {
 
         coupon.usedCount += 1;
 
-        coupon.usedBy.push(user);
+        coupon.usedBy.push(
+          user
+        );
 
         await coupon.save();
+
       }
     }
+
+    // =========================================
+    // CREATE NOTIFICATION
+    // =========================================
+
     await createNotification({
-      title: "New Order Received",
+
+      title:
+        "New Order Received",
 
       message: `${shippingAddress.fullName} placed a new order worth ₹${totalAmount}`,
 
-      category: "Orders",
+      category:
+        "Orders",
 
-      priority: "normal",
+      priority:
+        "normal",
 
-      relatedId: order._id,
+      relatedId:
+        order._id,
 
-      type: "NEW_ORDER",
+      type:
+        "NEW_ORDER",
     });
 
+    // =========================================
     // FIND USER CART
-    const cart = await Cart.findOne({
-      user,
-    });
+    // =========================================
 
-    console.log("CART FOUND:", cart);
-
-    // 0UPDATE CART ITEMS
-    if (cart) {
-
-      cart.items.forEach((cartItem) => {
-
-        const orderedItem = items.find(
-          (item) =>
-            item.productId.toString() ===
-            cartItem.productId.toString()
-        );
-
-        // ONLY ORDERED ITEMS TRUE
-        if (orderedItem) {
-
-          cartItem.orderPlaced = true;
-
-          cartItem.orderedAt = new Date();
-        }
+    const cart =
+      await Cart.findOne({
+        user,
       });
 
+    console.log(
+      "CART FOUND:",
+      cart
+    );
+
+    // =========================================
+    // UPDATE CART ITEMS
+    // =========================================
+
+    if (cart) {
+
+      cart.items.forEach(
+        (cartItem) => {
+
+          const orderedItem =
+            items.find(
+              (item) =>
+                item.productId.toString() ===
+                cartItem.productId.toString()
+            );
+
+          // ONLY ORDERED ITEMS TRUE
+
+          if (orderedItem) {
+
+            cartItem.orderPlaced = true;
+
+            cartItem.orderedAt =
+              new Date();
+          }
+        }
+      );
+
       // IMPORTANT
-      cart.markModified("items");
+
+      cart.markModified(
+        "items"
+      );
 
       await cart.save();
 
-      console.log("UPDATED CART:", cart);
+      console.log(
+        "UPDATED CART:",
+        cart
+      );
     }
 
+    // =========================================
+    // SUCCESS RESPONSE
+    // =========================================
+
     res.status(200).json({
+
       success: true,
-      message: "Order placed successfully",
+
+      message:
+        "Order placed successfully",
+
       order,
     });
 
   } catch (error) {
 
     console.log(error);
-    console.log(error.message);
+
+    console.log(
+      error.message
+    );
 
     res.status(500).json({
+
       success: false,
-      message: error.message,
+
+      message:
+        error.message,
     });
   }
 };

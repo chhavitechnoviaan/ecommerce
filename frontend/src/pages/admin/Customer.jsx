@@ -62,7 +62,6 @@ const navigate = useNavigate();
   useEffect(() => {
 
     fetchCustomers();
-
   }, []);
 
   const fetchCustomers = async () => {

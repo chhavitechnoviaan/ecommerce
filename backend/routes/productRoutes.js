@@ -8,7 +8,12 @@ import {
   getSingleProduct,
   getFilteredProducts,
   getProductsByCollection,
+<<<<<<< HEAD
   getNewArrivalProducts
+=======
+  getNewArrivalProducts,
+  getTrendingProducts
+>>>>>>> 8bab27cb7a278100ef6c49db99aebd76a75bf21f
 } from "../controllers/productController.js";
 import {
   upload,
@@ -27,6 +32,13 @@ router.get(
   "/new-arrivals",
   getNewArrivalProducts
 );
+<<<<<<< HEAD
+=======
+router.get(
+  "/trending",
+  getTrendingProducts
+);
+>>>>>>> 8bab27cb7a278100ef6c49db99aebd76a75bf21f
 router.get("/:id", getSingleProduct);
 
 router.delete("/delete/:id", deleteProduct);

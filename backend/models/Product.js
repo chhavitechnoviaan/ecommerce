@@ -69,6 +69,20 @@ const productSchema = new mongoose.Schema(
     extraFields: [extraFieldSchema],
 
     images: [String],
+
+    soldCount: {
+      type: Number,
+      default: 0,
+    },
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+
+    totalReviews: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -79,4 +93,4 @@ const productSchema = new mongoose.Schema(
 const Product =
   mongoose.models.Product ||
   mongoose.model("Product", productSchema);
-  export default Product;
+export default Product;

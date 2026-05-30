@@ -17,7 +17,9 @@ import dashboardRoutes
   from "./routes/dashboardRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 import path from "path";
+
 dotenv.config();
 
 const app = express();
@@ -57,6 +59,7 @@ app.use("/api/coupons", couponRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/reviews", reviewRoutes);
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {

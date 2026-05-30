@@ -58,7 +58,6 @@ const [loading, setLoading] =
 useEffect(() => {
 
   fetchTransactions();
-
 }, []);
   const filteredTransactions = transactions.filter(
     (item) =>

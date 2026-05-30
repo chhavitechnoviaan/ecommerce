@@ -72,10 +72,26 @@ const App = () => {
           path="/explore/:category"
           element={<ExploreNow />}
         />
-
+        <Route
+          path="/explore/:productType/:category"
+          element={<ExploreNow />}
+        />
+        <Route
+          path="/explore/collection/:collection"
+          element={<ExploreNow />}
+        />
+<Route
+  path="/explore/new-arrivals"
+  element={<ExploreNow />}
+/>
         {/* PRODUCT */}
         <Route
           path="/productcart"
+          element={<ProductCart />}
+        />
+
+        <Route
+          path="/productcart/:id"
           element={<ProductCart />}
         />
 
